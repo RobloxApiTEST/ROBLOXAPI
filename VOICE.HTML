@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice to Text</title>
+</head>
+<body>
+    <h1>Voice to Text</h1>
+    <div id="transcription"></div>
+
+    <script>
+        // Check browser support for SpeechRecognition
+        if ('webkitSpeechRecognition' in window) {
+            var recognition = new window.webkitSpeechRecognition(); // for Chrome
+            var transcriptionDiv = document.getElementById('transcription');
+            
+            // Continuous transcription
+            recognition.continuous = true;
+            
+            // Start recognition when page loads
+            recognition.start();
+            
+            // Event handler for receiving transcribed text
+            recognition.onresult = function(event) {
+                var transcript = event.results[event.results.length - 1][0].transcript;
+                transcriptionDiv.textContent += transcript + ' ';
+            };
+            
+            // Error handler
+            recognition.onerror = function(event) {
+                console.error('Recognition error:', event.error);
+            };
+        } else {
+            // SpeechRecognition not supported
+            alert('Speech recognition not supported in this browser. Please use Chrome.');
+        }
+    </script>
+</body>
+</html>
